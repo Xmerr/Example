@@ -21295,6 +21295,8 @@ var _actions = __webpack_require__(29);
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // The redux function that creates the store
 
 
+var index = 0;
+
 // This reducer will control all the messages
 var messages = function messages() // This is the action that's being applied to the store
 {
@@ -21305,6 +21307,7 @@ var messages = function messages() // This is the action that's being applied to
     // Remember how the required property in the actions.js file was "type"? here it is
     switch (action.type) {
         case _actions.actions.ADD_MESSAGE:
+            action.msg.id = index++; // Unique identifier
             return [].concat(_toConsumableArray(state), [action.msg]); // Here's the other property, msg, which we've defined in the actions.js file
 
         case _actions.actions.DELETE_MESSAGE:
@@ -21376,18 +21379,48 @@ var MessageManager = function (_React$Component) {
                 message: "Test Message 3"
             });
         }
+
+        /**
+         * Adds a new message
+         */
+
+    }, {
+        key: 'createMessage',
+        value: function createMessage() {
+            this.props.add({
+                from: "Me",
+                message: this.refs.input.value
+            });
+        }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return React.createElement(
                 'div',
                 null,
                 this.props.messages.map(function (msg) {
                     return React.createElement(_message2.default, {
+                        key: msg.id,
                         from: msg.from,
-                        message: msg.message
+                        message: msg.message,
+                        'delete': function _delete() {
+                            return _this2.props.delete(msg.id);
+                        } // If you look at mapDispatchToProps you'll find this property definition
                     });
-                })
+                }),
+                React.createElement('input', { ref: 'input' }),
+                React.createElement(
+                    'button',
+                    {
+                        type: 'button',
+                        onClick: function onClick() {
+                            return _this2.createMessage();
+                        }
+                    },
+                    'Send'
+                )
             );
         }
     }]);
@@ -21452,7 +21485,9 @@ var Message = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 "div",
-                null,
+                {
+                    onClick: this.props.delete
+                },
                 this.props.from,
                 ": ",
                 this.props.message

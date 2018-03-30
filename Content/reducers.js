@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'; // The redux function that creates the store
 import {actions} from './actions';
 
+var index = 0;
+
 // This reducer will control all the messages
 const messages = (
     state = [], // This sets the default state of this reducer to an empty array
@@ -9,6 +11,7 @@ const messages = (
     // Remember how the required property in the actions.js file was "type"? here it is
     switch(action.type) { 
         case actions.ADD_MESSAGE:
+            action.msg.id = index++; // Unique identifier
             return [...state, action.msg]; // Here's the other property, msg, which we've defined in the actions.js file
 
         case actions.DELETE_MESSAGE:

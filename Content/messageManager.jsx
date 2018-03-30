@@ -18,17 +18,37 @@ class MessageManager extends React.Component {
         });
     }
 
+    /**
+     * Adds a new message
+     */
+    submit() {
+        this.props.add({ // If you look at mapDispatchToProps you'll find this property definition
+            from: "Me", // Could be any string
+            message: this.refs.input.value // This grabs the value of the input reference
+        });
+    }
+
     render() {
         return (
             <div>
                 {this.props.messages.map(msg => {
                     return (
                         <Message
+                            key={msg.id}
                             from={msg.from}
                             message={msg.message}
+                            delete={() => this.props.delete(msg.id)} // If you look at mapDispatchToProps you'll find this property definition
                         />
                     )
                 })}
+
+                <input ref="input" />
+                <button
+                    type="button"
+                    onClick={() => this.submit()}
+                >
+                    Send
+                </button>
             </div>
         )
     }

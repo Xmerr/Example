@@ -23,6 +23,11 @@ var path = require('path'),
             filename: '[name].bundle.js' // The name of the bundle once it's saved
         },
         
+        
+        resolve: {
+            extensions: ['.jsx', '.js', '.css', '.scss', '.jpeg', '.jpg', '.png', '.gif'] // Extensions you can ignore when importing files
+        },
+        
         // What modules can be included in this webpack and how to compile them
         module: {
             loaders: [

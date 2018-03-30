@@ -13,7 +13,7 @@ var messageArray = [
     },
 ];
 
-import MessageManager from "./messageManager.jsx";
+import MessageManager from "./messageManager";
 
 class Base extends React.Component {
     // This function is required on all React.Components as it's what's called to render the component

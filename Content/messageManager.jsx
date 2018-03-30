@@ -1,4 +1,4 @@
-import Message from "./message.jsx";
+import Message from "./message";
 
 class MessageManager extends React.Component {
     render() {

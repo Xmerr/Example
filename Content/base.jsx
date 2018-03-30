@@ -4,7 +4,14 @@ import app from './reducers';
 let store = createStore(app);
 
 import MessageManager from "./messageManager";
+import { addMessage } from './actions';
 global.getState = () => store.getState();
+
+global.hub = $.connection.chatHub;
+global.hub.client.addMessage = (from, message) => {
+    store.dispatch(addMessage({from, message}))
+};
+$.connection.hub.start();
 
 class Base extends React.Component {
     // This function is required on all React.Components as it's what's called to render the component

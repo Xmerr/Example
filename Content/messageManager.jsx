@@ -22,10 +22,12 @@ class MessageManager extends React.Component {
      * Adds a new message
      */
     submit() {
-        this.props.add({ // If you look at mapDispatchToProps you'll find this property definition
+        var msg = {
             from: "Me", // Could be any string
             message: this.refs.input.value // This grabs the value of the input reference
-        });
+        }
+        global.hub.server.send(msg.from, msg.message);
+        this.props.add(msg);
     }
 
     render() {
